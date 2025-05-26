@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Modern Text Online Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            background-color: #faf8f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .controls {
+            background: white;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .control-group label {
+            font-weight: bold;
+            color: #8b4513;
+        }
+
+        select, input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .edition-container {
+            display: grid;
+            grid-template-columns: 200px 200px 1fr 300px;
+            gap: 1rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: calc(100vh - 200px);
+        }
+
+        .column {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .column h3 {
+            color: #8b4513;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #8b4513;
+            font-size: 1.1rem;
+        }
+
+        .marginal-notes-2 {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .marginal-notes-1 {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .main-text {
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .variant-texts {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .note-item {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #f9f7f4;
+            border-left: 3px solid #8b4513;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .note-ref {
+            font-weight: bold;
+            color: #8b4513;
+            font-size: 0.9em;
+        }
+
+        .note-content {
+            margin-top: 0.3rem;
+            color: #555;
+        }
+
+        .text-line {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .line-number {
+            color: #999;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            display: inline-block;
+            width: 30px;
+        }
+
+        .variant-item {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #f0f8ff;
+            border-left: 3px solid #4682b4;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .variant-source {
+            font-weight: bold;
+            color: #4682b4;
+            font-size: 0.9em;
+        }
+
+        .variant-text {
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+
+        .editable {
+            border: none;
+            background: transparent;
+            resize: vertical;
+            width: 100%;
+            min-height: 100px;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .editable:focus {
+            outline: 2px solid #8b4513;
+            background: #fffef9;
+        }
+
+        .add-button {
+            background: #8b4513;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .add-button:hover {
+            background: #a0522d;
+        }
+
+        @media (max-width: 1200px) {
+            .edition-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .column {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .sync-scroll {
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Early Modern Text Online Edition</h1>
+        <p>Scholarly Digital Edition with Comparative Analysis</p>
+    </div>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="textSelect">Select Text:</label>
+            <select id="textSelect">
+                <option value="sample">Sample Early Modern Text</option>
+                <option value="custom">Upload Custom Text</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="fontSize">Font Size:</label>
+            <input type="range" id="fontSize" min="12" max="20" value="16">
+            <span id="fontSizeValue">16px</span>
+        </div>
+    </div>
+
+    <div class="edition-container">
+        <!-- Second Level Marginal Notes (Far Left) -->
+        <div class="column marginal-notes-2">
+            <h3>Historical Context</h3>
+            <div class="sync-scroll" id="marginalNotes2">
+                <div class="note-item">
+                    <div class="note-ref">Line 1-3</div>
+                    <div class="note-content">This opening passage reflects the rhetorical conventions of 16th-century moral treatises, particularly influenced by classical stoicism.</div>
+                </div>
+                <div class="note-item">
+                    <div class="note-ref">Line 8</div>
+                    <div class="note-content">The term "vertue" here follows Middle English spelling conventions common in manuscripts from this period.</div>
+                </div>
+                <div class="note-item">
+                    <div class="note-ref">Line 12-15</div>
+                    <div class="note-content">Biblical allusion to Ecclesiastes 3:1, "To every thing there is a season," demonstrates the author's theological background.</div>
+                </div>
+            </div>
+            <button class="add-button" onclick="addNote('marginalNotes2', 'Historical Context')">Add Context Note</button>
+        </div>
+
+        <!-- First Level Marginal Notes -->
+        <div class="column marginal-notes-1">
+            <h3>Textual Notes</h3>
+            <div class="sync-scroll" id="marginalNotes1">
+                <div class="note-item">
+                    <div class="note-ref">Line 2</div>
+                    <div class="note-content">"prudence" - from Latin prudentia, practical wisdom</div>
+                </div>
+                <div class="note-item">
+                    <div class="note-ref">Line 5</div>
+                    <div class="note-content">Possible scribal error: "worlde" may be "worldly"</div>
+                </div>
+                <div class="note-item">
+                    <div class="note-ref">Line 9</div>
+                    <div class="note-content">Marginal mark in MS indicates author's emphasis</div>
+                </div>
+                <div class="note-item">
+                    <div class="note-ref">Line 14</div>
+                    <div class="note-content">Cross-reference to Chapter 3, folio 15r</div>
+                </div>
+            </div>
+            <button class="add-button" onclick="addNote('marginalNotes1', 'Textual Notes')">Add Text Note</button>
+        </div>
+
+        <!-- Main Text -->
+        <div class="column main-text">
+            <h3>Main Text (Base Manuscript)</h3>
+            <div class="sync-scroll" id="mainText">
+                <div class="text-line">
+                    <span class="line-number">1</span>Of all the vertues that adorne the soule of man, none
+                </div>
+                <div class="text-line">
+                    <span class="line-number">2</span>is more excellent than prudence, which guideth us
+                </div>
+                <div class="text-line">
+                    <span class="line-number">3</span>in all our actions toward that ende most happie.
+                </div>
+                <div class="text-line">
+                    <span class="line-number">4</span>
+                </div>
+                <div class="text-line">
+                    <span class="line-number">5</span>For what availeth it to have knowledge of worlde
+                </div>
+                <div class="text-line">
+                    <span class="line-number">6</span>matters, if we want the skill to use them well?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">7</span>What profiteth learning without discretion?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">8</span>Or what good can come of wit wanting vertue?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">9</span>
+                </div>
+                <div class="text-line">
+                    <span class="line-number">10</span>Therefore let us embrace this noble gift, which
+                </div>
+                <div class="text-line">
+                    <span class="line-number">11</span>maketh us like unto the angels, and separateth
+                </div>
+                <div class="text-line">
+                    <span class="line-number">12</span>us from the beasts of the field. For there is
+                </div>
+                <div class="text-line">
+                    <span class="line-number">13</span>a time for all things under heaven, and blessed
+                </div>
+                <div class="text-line">
+                    <span class="line-number">14</span>is he that knoweth when to speak and when
+                </div>
+                <div class="text-line">
+                    <span class="line-number">15</span>to hold his peace.
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant Texts -->
+        <div class="column variant-texts">
+            <h3>Textual Variants</h3>
+            <div class="sync-scroll" id="variantTexts">
+                <div class="variant-item">
+                    <div class="variant-source">MS B, Line 1</div>
+                    <div class="variant-text">"vertues" → "virtues" (modernized spelling)</div>
+                </div>
+                <div class="variant-item">
+                    <div class="variant-source">MS C, Line 2-3</div>
+                    <div class="variant-text">"prudence, which guideth us in all our actions toward that ende most happie" → "prudence, our guide in all actions towards happiness"</div>
+                </div>
+                <div class="variant-item">
+                    <div class="variant-source">Print Ed. 1615, Line 5</div>
+                    <div class="variant-text">"worlde matters" → "worldly matters"</div>
+                </div>
+                <div class="variant-item">
+                    <div class="variant-source">MS D, Line 8</div>
+                    <div class="variant-text">"wit wanting vertue" → "wisdom without virtue"</div>
+                </div>
+                <div class="variant-item">
+                    <div class="variant-source">MS B, Line 11</div>
+                    <div class="variant-text">"maketh us like unto the angels" → "makes us similar to angels"</div>
+                </div>
+                <div class="variant-item">
+                    <div class="variant-source">Print Ed. 1598, Line 13</div>
+                    <div class="variant-text">Additional text: "as the wise man sayeth,"</div>
+                </div>
+            </div>
+            <button class="add-button" onclick="addVariant()">Add Variant</button>
+        </div>
+    </div>
+
+    <script>
+        // Font size control
+        const fontSizeSlider = document.getElementById('fontSize');
+        const fontSizeValue = document.getElementById('fontSizeValue');
+        const columns = document.querySelectorAll('.column');
+
+        fontSizeSlider.addEventListener('input', function() {
+            const size = this.value + 'px';
+            fontSizeValue.textContent = size;
+            columns.forEach(column => {
+                column.style.fontSize = size;
+            });
+        });
+
+        // Add new note function
+        function addNote(containerId, type) {
+            const container = document.getElementById(containerId);
+            const noteDiv = document.createElement('div');
+            noteDiv.className = 'note-item';
+            noteDiv.innerHTML = `
+                <div class="note-ref">
+                    <input type="text" placeholder="Line reference" style="width: 100px; padding: 2px;">
+                </div>
+                <div class="note-content">
+                    <textarea class="editable" placeholder="Enter your ${type.toLowerCase()} note here..."></textarea>
+                </div>
+            `;
+            container.appendChild(noteDiv);
+            noteDiv.querySelector('textarea').focus();
+        }
+
+        // Add new variant function
+        function addVariant() {
+            const container = document.getElementById('variantTexts');
+            const variantDiv = document.createElement('div');
+            variantDiv.className = 'variant-item';
+            variantDiv.innerHTML = `
+                <div class="variant-source">
+                    <input type="text" placeholder="Source (e.g., MS A, Line 5)" style="width: 200px; padding: 2px;">
+                </div>
+                <div class="variant-text">
+                    <textarea class="editable" placeholder="Enter variant reading here..."></textarea>
+                </div>
+            `;
+            container.appendChild(variantDiv);
+            variantDiv.querySelector('textarea').focus();
+        }
+
+        // Synchronized scrolling (optional feature)
+        const scrollContainers = document.querySelectorAll('.sync-scroll');
+        let isScrollSyncing = false;
+
+        scrollContainers.forEach(container => {
+            container.addEventListener('scroll', function() {
+                if (!isScrollSyncing) {
+                    isScrollSyncing = true;
+                    const scrollRatio = this.scrollTop / (this.scrollHeight - this.clientHeight);
+                    
+                    scrollContainers.forEach(otherContainer => {
+                        if (otherContainer !== this) {
+                            otherContainer.scrollTop = scrollRatio * (otherContainer.scrollHeight - otherContainer.clientHeight);
+                        }
+                    });
+                    
+                    setTimeout(() => { isScrollSyncing = false; }, 50);
+                }
+            });
+        });
+
+        // Make main text editable for collaborative editing
+        document.getElementById('mainText').addEventListener('click', function(e) {
+            if (e.target.classList.contains('text-line')) {
+                const currentText = e.target.innerHTML;
+                const lineNumber = e.target.querySelector('.line-number').outerHTML;
+                const textContent = e.target.innerHTML.replace(lineNumber, '');
+                
+                e.target.innerHTML = lineNumber + '<input type="text" value="' + textContent.trim() + '" style="width: calc(100% - 40px); border: 1px solid #8b4513; padding: 2px;">';
+                
+                const input = e.target.querySelector('input');
+                input.focus();
+                input.select();
+                
+                input.addEventListener('blur', function() {
+                    e.target.innerHTML = lineNumber + this.value;
+                });
+                
+                input.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        this.blur();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

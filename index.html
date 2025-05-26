@@ -66,10 +66,10 @@
 
         .edition-container {
             display: grid;
-            grid-template-columns: 200px 200px 1fr 300px;
+            grid-template-columns: 200px 200px 1fr 1fr 1fr 1fr;
             gap: 1rem;
             padding: 2rem;
-            max-width: 1400px;
+            max-width: 1800px;
             margin: 0 auto;
             min-height: calc(100vh - 200px);
         }
@@ -105,9 +105,22 @@
             line-height: 1.8;
         }
 
-        .variant-texts {
-            font-size: 0.95rem;
-            line-height: 1.6;
+        .variant-text-1 {
+            font-size: 1rem;
+            line-height: 1.8;
+            background: #f0fff0 !important; /* Very light green */
+        }
+
+        .variant-text-2 {
+            font-size: 1rem;
+            line-height: 1.8;
+            background: #faf8f2 !important; /* Very light brown */
+        }
+
+        .variant-text-3 {
+            font-size: 1rem;
+            line-height: 1.8;
+            background: #f5f3ed !important; /* Slightly darker light brown */
         }
 
         .note-item {
@@ -327,36 +340,160 @@
             </div>
         </div>
 
-        <!-- Variant Texts -->
-        <div class="column variant-texts">
-            <h3>Textual Variants</h3>
-            <div class="sync-scroll" id="variantTexts">
-                <div class="variant-item">
-                    <div class="variant-source">MS B, Line 1</div>
-                    <div class="variant-text">"vertues" → "virtues" (modernized spelling)</div>
+        <!-- Variant Text 1 (Light Green) -->
+        <div class="column variant-text-1">
+            <h3>Manuscript A</h3>
+            <div class="sync-scroll" id="variantText1">
+                <div class="text-line">
+                    <span class="line-number">1</span>Of all the virtues that adorne the soul of man, none
                 </div>
-                <div class="variant-item">
-                    <div class="variant-source">MS C, Line 2-3</div>
-                    <div class="variant-text">"prudence, which guideth us in all our actions toward that ende most happie" → "prudence, our guide in all actions towards happiness"</div>
+                <div class="text-line">
+                    <span class="line-number">2</span>is more excellent than prudence, which guides us
                 </div>
-                <div class="variant-item">
-                    <div class="variant-source">Print Ed. 1615, Line 5</div>
-                    <div class="variant-text">"worlde matters" → "worldly matters"</div>
+                <div class="text-line">
+                    <span class="line-number">3</span>in all our actions toward that end most happy.
                 </div>
-                <div class="variant-item">
-                    <div class="variant-source">MS D, Line 8</div>
-                    <div class="variant-text">"wit wanting vertue" → "wisdom without virtue"</div>
+                <div class="text-line">
+                    <span class="line-number">4</span>
                 </div>
-                <div class="variant-item">
-                    <div class="variant-source">MS B, Line 11</div>
-                    <div class="variant-text">"maketh us like unto the angels" → "makes us similar to angels"</div>
+                <div class="text-line">
+                    <span class="line-number">5</span>For what availeth it to have knowledge of worldly
                 </div>
-                <div class="variant-item">
-                    <div class="variant-source">Print Ed. 1598, Line 13</div>
-                    <div class="variant-text">Additional text: "as the wise man sayeth,"</div>
+                <div class="text-line">
+                    <span class="line-number">6</span>matters, if we want the skill to use them well?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">7</span>What profiteth learning without discretion?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">8</span>Or what good can come of wisdom wanting virtue?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">9</span>
+                </div>
+                <div class="text-line">
+                    <span class="line-number">10</span>Therefore let us embrace this noble gift, which
+                </div>
+                <div class="text-line">
+                    <span class="line-number">11</span>makes us like unto the angels, and separates
+                </div>
+                <div class="text-line">
+                    <span class="line-number">12</span>us from the beasts of the field. For there is
+                </div>
+                <div class="text-line">
+                    <span class="line-number">13</span>a time for all things under heaven, as the wise man sayeth, and blessed
+                </div>
+                <div class="text-line">
+                    <span class="line-number">14</span>is he that knoweth when to speak and when
+                </div>
+                <div class="text-line">
+                    <span class="line-number">15</span>to hold his peace.
                 </div>
             </div>
-            <button class="add-button" onclick="addVariant()">Add Variant</button>
+        </div>
+
+        <!-- Variant Text 2 (Light Brown) -->
+        <div class="column variant-text-2">
+            <h3>Manuscript B</h3>
+            <div class="sync-scroll" id="variantText2">
+                <div class="text-line">
+                    <span class="line-number">1</span>Of all ye vertues that adorne ye soule of man, none
+                </div>
+                <div class="text-line">
+                    <span class="line-number">2</span>is more excellent than prudence, which doth guide us
+                </div>
+                <div class="text-line">
+                    <span class="line-number">3</span>in all our actions toward that ende most blessed.
+                </div>
+                <div class="text-line">
+                    <span class="line-number">4</span>
+                </div>
+                <div class="text-line">
+                    <span class="line-number">5</span>For what availeth it to have knowledge of worlde
+                </div>
+                <div class="text-line">
+                    <span class="line-number">6</span>matters, if we lacke the skill to use them well?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">7</span>What profiteth learning without discretion and wisdome?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">8</span>Or what good can come of wit wanting vertue?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">9</span>
+                </div>
+                <div class="text-line">
+                    <span class="line-number">10</span>Therefore let us embrace this most noble gift, which
+                </div>
+                <div class="text-line">
+                    <span class="line-number">11</span>maketh us like unto ye angels, and separateth
+                </div>
+                <div class="text-line">
+                    <span class="line-number">12</span>us from ye beasts of ye field. For there is
+                </div>
+                <div class="text-line">
+                    <span class="line-number">13</span>a season for all things under heaven, and blessed
+                </div>
+                <div class="text-line">
+                    <span class="line-number">14</span>is he that knoweth when to speake and when
+                </div>
+                <div class="text-line">
+                    <span class="line-number">15</span>to hold his peace in silence.
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant Text 3 (Darker Light Brown) -->
+        <div class="column variant-text-3">
+            <h3>Print Edition 1598</h3>
+            <div class="sync-scroll" id="variantText3">
+                <div class="text-line">
+                    <span class="line-number">1</span>Of all the vertues that adorne the soule of man, none
+                </div>
+                <div class="text-line">
+                    <span class="line-number">2</span>is more excellent than prudence, which guideth vs
+                </div>
+                <div class="text-line">
+                    <span class="line-number">3</span>in all our actions toward that ende most happie.
+                </div>
+                <div class="text-line">
+                    <span class="line-number">4</span>
+                </div>
+                <div class="text-line">
+                    <span class="line-number">5</span>For what auaileth it to haue knowledge of worlde
+                </div>
+                <div class="text-line">
+                    <span class="line-number">6</span>matters, if wee want the skill to vse them well?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">7</span>What profiteth learning without discretion?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">8</span>Or what good can come of wit wanting vertue?
+                </div>
+                <div class="text-line">
+                    <span class="line-number">9</span>Surely nothing but confusion and folly.
+                </div>
+                <div class="text-line">
+                    <span class="line-number">10</span>Therefore let vs embrace this noble gift, which
+                </div>
+                <div class="text-line">
+                    <span class="line-number">11</span>maketh vs like vnto the angels, and separateth
+                </div>
+                <div class="text-line">
+                    <span class="line-number">12</span>vs from the beasts of the field. For there is
+                </div>
+                <div class="text-line">
+                    <span class="line-number">13</span>a time for all things vnder heauen, and blessed
+                </div>
+                <div class="text-line">
+                    <span class="line-number">14</span>is hee that knoweth when to speake and when
+                </div>
+                <div class="text-line">
+                    <span class="line-number">15</span>to hold his peace.
+                </div>
+            </div>
         </div>
     </div>
 
@@ -391,21 +528,37 @@
             noteDiv.querySelector('textarea').focus();
         }
 
-        // Add new variant function
-        function addVariant() {
-            const container = document.getElementById('variantTexts');
-            const variantDiv = document.createElement('div');
-            variantDiv.className = 'variant-item';
-            variantDiv.innerHTML = `
-                <div class="variant-source">
-                    <input type="text" placeholder="Source (e.g., MS A, Line 5)" style="width: 200px; padding: 2px;">
-                </div>
-                <div class="variant-text">
-                    <textarea class="editable" placeholder="Enter variant reading here..."></textarea>
-                </div>
+        // Add new variant function (updated for text columns)
+        function addTextLine(containerId) {
+            const container = document.getElementById(containerId);
+            const lastLine = container.querySelector('.text-line:last-child');
+            const lastLineNum = lastLine ? parseInt(lastLine.querySelector('.line-number').textContent) : 0;
+            const newLineNum = lastLineNum + 1;
+            
+            const lineDiv = document.createElement('div');
+            lineDiv.className = 'text-line';
+            lineDiv.innerHTML = `
+                <span class="line-number">${newLineNum}</span>
+                <input type="text" placeholder="Enter text for line ${newLineNum}..." style="width: calc(100% - 40px); border: 1px solid #8b4513; padding: 2px;">
             `;
-            container.appendChild(variantDiv);
-            variantDiv.querySelector('textarea').focus();
+            container.appendChild(lineDiv);
+            
+            const input = lineDiv.querySelector('input');
+            input.focus();
+            
+            input.addEventListener('blur', function() {
+                if (this.value.trim()) {
+                    lineDiv.innerHTML = `<span class="line-number">${newLineNum}</span>${this.value}`;
+                } else {
+                    lineDiv.remove();
+                }
+            });
+            
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    this.blur();
+                }
+            });
         }
 
         // Synchronized scrolling (optional feature)
@@ -429,29 +582,33 @@
             });
         });
 
-        // Make main text editable for collaborative editing
-        document.getElementById('mainText').addEventListener('click', function(e) {
-            if (e.target.classList.contains('text-line')) {
-                const currentText = e.target.innerHTML;
-                const lineNumber = e.target.querySelector('.line-number').outerHTML;
-                const textContent = e.target.innerHTML.replace(lineNumber, '');
-                
-                e.target.innerHTML = lineNumber + '<input type="text" value="' + textContent.trim() + '" style="width: calc(100% - 40px); border: 1px solid #8b4513; padding: 2px;">';
-                
-                const input = e.target.querySelector('input');
-                input.focus();
-                input.select();
-                
-                input.addEventListener('blur', function() {
-                    e.target.innerHTML = lineNumber + this.value;
-                });
-                
-                input.addEventListener('keydown', function(event) {
-                    if (event.key === 'Enter') {
-                        this.blur();
-                    }
-                });
-            }
+        // Make text columns editable for collaborative editing
+        const textColumns = ['mainText', 'variantText1', 'variantText2', 'variantText3'];
+        
+        textColumns.forEach(columnId => {
+            document.getElementById(columnId).addEventListener('click', function(e) {
+                if (e.target.classList.contains('text-line')) {
+                    const currentText = e.target.innerHTML;
+                    const lineNumber = e.target.querySelector('.line-number').outerHTML;
+                    const textContent = e.target.innerHTML.replace(lineNumber, '');
+                    
+                    e.target.innerHTML = lineNumber + '<input type="text" value="' + textContent.trim() + '" style="width: calc(100% - 40px); border: 1px solid #8b4513; padding: 2px;">';
+                    
+                    const input = e.target.querySelector('input');
+                    input.focus();
+                    input.select();
+                    
+                    input.addEventListener('blur', function() {
+                        e.target.innerHTML = lineNumber + this.value;
+                    });
+                    
+                    input.addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter') {
+                            this.blur();
+                        }
+                    });
+                }
+            });
         });
     </script>
 </body>
